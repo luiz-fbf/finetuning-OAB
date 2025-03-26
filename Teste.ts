@@ -46,9 +46,9 @@ async function processarPDF() {
       const Messages: ChatMessage[] = [
         {
           role: 'system',
-          content: `Sua função é extrair dados de um arquivo de texto e armazená-los em uma estrutura JSON. Para montar o JSON siga essa estrutura de INTERFACE: { n_processo?: string; classificador?: string; valor_fixado?: string; nome_advogado?: string; nome_juiz?: string; nome_apelado?: string; nome_apelante?: string; assinatura_valid?: boolean; }. 
-                    Caso você não tenha certeza ou não encontre o dado requerido, NAO INVENTE DADOS, coloque como NULL. Lembre-se de não abreviar nomes em siglas!
-                    OS DADOS SÃO: o CODIGO DO PROCESSO, VALOR FIXADO DATIVOS/HONORÁRIOS, NOME DO ADVOGADO, NOME DO JUIZ, NOME DO APELANTE, NOME DO APELADO, SE FOI ASSINADO PELO JUIZ e, além disso, de acordo com a tabela providenciada abaixo, você deve classificar esse processo com 1 dos códigos fornecidos de acordo com a temática: ${conteudo}`
+          content: `Sua função é extrair dados de um arquivo de texto e armazená-los em uma estrutura JSON. Para montar o JSON siga essa estrutura de INTERFACE: { n_processo?: string; classificador?: string; valor_fixado?: float; nome_advogado?: string; nome_juiz?: string; nome_apelado?: string; nome_apelante?: string; assinatura_valid?: boolean; assinatura_date?: string; }. 
+                    Caso você não tenha certeza ou não encontre o dado requerido, NAO INVENTE DADOS, coloque como NULL. Normalmente há mais de um advogado nomeado para receber os dativos, se houver mais de 1 advogado, coloque o NOME dos dois ADVOGADOS dentro de um VETOR. FAÇA ISSO TAMBÉM PARA O VALOR, caso haja mais de um valor decorrente de mais de um advogado nomeado, coloque os valores em um VETOR. Lembre-se de não abreviar nomes em siglas!
+                    OS DADOS SÃO: o CODIGO DO PROCESSO, VALOR FIXADO DATIVOS/HONORÁRIOS, NOME DO ADVOGADO, NOME DO JUIZ, NOME DO APELANTE, NOME DO APELADO, SE FOI ASSINADO PELO JUIZ, DATA DA ASSINATURA (YYYY-MM-DD) e, além disso, de acordo com a tabela providenciada abaixo, você deve classificar esse processo com 1 dos códigos fornecidos de acordo com a temática: ${conteudo}`
         },
         {
           role: 'user',
@@ -56,7 +56,7 @@ async function processarPDF() {
         },
         {
           role: 'assistant',
-          content: '{ n_processo?: string; classificador?: string; valor_fixado?: string; nome_advogado?: string; nome_juiz?: string; nome_apelado?: string; nome_apelante?: string; assinatura_valid?: boolean; }'
+          content: '{ n_processo?: string; classificador?: string; valor_fixado?: string; nome_advogado?: string; nome_juiz?: string; nome_apelado?: string; nome_apelante?: string; assinatura_valid?: boolean; assinatura_date?: string; }'
         }
       ];
       
@@ -75,6 +75,14 @@ async function processarPDF() {
         })
       });
       
+
+      // Verifica se houve erro na resposta
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("API Error:", errorText);
+        continue; // Pula para a próxima iteração, se estiver dentro de um loop
+      }
+
       // Asserção de tipo para OpenAIResponse
       const completion = (await response.json()) as OpenAIResponse;
 
