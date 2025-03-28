@@ -161,7 +161,7 @@ async function processarPDFs() {
                     continue;
                 }
             }
-
+            //let pasta_2 = "1.1_2";
             // Write the outputs to a JSONL file for the current classifier folder.
             const outputFilePath = path.join(diretorioCompleto, `${pasta}.jsonl`);
             const outputStream = fs.createWriteStream(outputFilePath, { flags: "w" });

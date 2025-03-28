@@ -84,7 +84,7 @@ async function processarPDFs() {
           {
             role: 'system',
             content: `Sua função é PERCORRER O PROCESSO JURÍDICO INTEIRO, INTERPRETAR O PROCESSO E CLASSIFICAR COM BASE NO ENTENDIMENTO JURÍDICO DO BRASIL E NA TABELA DE DATIVOS ADVOCATÍCIOS FORNECIDA. Para classificar o processo, utilize a tabela de classificadores fornecida, lembre-se de INTERPRETAR O PROCESSO. Além disso, extraia dados de um arquivo de texto e armazená-los em uma estrutura JSON. Para montar o JSON siga essa estrutura de INTERFACE: { n_processo?: string; classificador?: string; valor_fixado?: float; nome_advogado?: string; nome_juiz?: string; nome_apelado?: string; nome_apelante?: string; assinatura_valid?: boolean; assinatura_date?: string; }. 
-                    Caso você não tenha certeza ou não encontre o dado requerido, NAO INVENTE DADOS, coloque como NULL. Normalmente há mais de um advogado nomeado para receber os dativos, se houver mais de 1 advogado, coloque o NOME dos dois ADVOGADOS dentro de um VETOR. FAÇA ISSO TAMBÉM PARA O VALOR, caso haja mais de um valor decorrente de mais de um advogado nomeado, coloque os valores em um VETOR. LEMBRE-SE, não retorne nenhuma justificstiva, apenas o JSON. Percebi que você está confundindo o classificador, quando na realidade é 1.2 voce classifica como 1.1, PRESTE ATENÇÃO. LMEBRE-SE DE SE ATENTAR AOS VALORES DE CADA ITEM, COMPARE COM O VALOR QUE VOCE EXTRAIU PARA DECIDIR O CODIGO CORRETO. OS DADOS SÃO: o CODIGO DO PROCESSO, VALOR FIXADO DATIVOS/HONORÁRIOS, NOME DO ADVOGADO, NOME DO JUIZ, NOME DO APELANTE, NOME DO APELADO, SE FOI ASSINADO PELO JUIZ, DATA DA ASSINATURA (YYYY-MM-DD) e, de acordo com a tabela providenciada abaixo, você deve classificar esse processo com 1 dos códigos fornecidos de acordo com a temática: ${conteudoTabela}`
+                    Caso você não tenha certeza ou não encontre o dado requerido, NAO INVENTE DADOS, coloque como 'null' . Normalmente há mais de um advogado nomeado para receber os dativos, se houver mais de 1 advogado, coloque o NOME dos dois ADVOGADOS dentro de um VETOR. FAÇA ISSO TAMBÉM PARA O VALOR, caso haja mais de um valor decorrente de mais de um advogado nomeado, coloque os valores em um VETOR. LEMBRE-SE, não retorne nenhuma justificstiva, apenas o JSON. Percebi que você está confundindo o classificador, quando na realidade é 1.2 voce classifica como 1.1, PRESTE ATENÇÃO. LMEBRE-SE DE SE ATENTAR AOS VALORES DE CADA ITEM, COMPARE COM O VALOR QUE VOCE EXTRAIU PARA DECIDIR O CODIGO CORRETO. OS DADOS SÃO: o CODIGO DO PROCESSO, VALOR FIXADO DATIVOS/HONORÁRIOS, NOME DO ADVOGADO, NOME DO JUIZ, NOME DO APELANTE, NOME DO APELADO, SE FOI ASSINADO PELO JUIZ, DATA DA ASSINATURA (YYYY-MM-DD) e, de acordo com a tabela providenciada abaixo, você deve classificar esse processo com 1 dos códigos fornecidos de acordo com a temática: ${conteudoTabela}`
           },
           {
             role: 'user',
@@ -103,7 +103,7 @@ async function processarPDFs() {
             "Authorization": `Bearer ${OPENAI_API_KEY}`
           },
           body: JSON.stringify({
-            model: "ft:gpt-4o-mini-2024-07-18:leany-lean-ventures:fine-tuning-oab-2:BDB3WhNi",
+            model: "ft:gpt-4o-mini-2024-07-18:leany-lean-ventures:fine-tuning-oab-1-1:BFhHhnXQ",
             messages: Messages,
             max_tokens: 150,
           })

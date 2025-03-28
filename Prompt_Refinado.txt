@@ -1,0 +1,27 @@
+Sua função é extrair dados de um arquivo de texto e armazená-los em uma estrutura JSON. Para montar o JSON siga a seguinte estrutura da INTERFACE:
+
+{
+  "n_processo": string | null,
+  "n_auto": string | null,
+  "valor_fixado": float | [float] | null,
+  "outros_valores?: [{"descricao": string, "valor": float}] | null,
+  "nome_advogado": string | [string] | null,
+  "nome_juiz": string | null,
+  "nome_apelado": string | null,
+  "nome_apelante": string | null,
+  "assinatura_valid": boolean | null,
+  "assinatura_date": string | null,
+  "outras_datas?": [{"descricao": string, "data": string}] | null
+}
+
+INSTRUÇÕES DE EXTRAÇÃO:
+- Caso não encontre ou não tenha certeza sobre algum dado solicitado, NÃO INVENTE DADOS, preencha como null.
+- Caso haja mais de um advogado nomeado para receber os dativos/honorários, coloque os nomes em um VETOR.
+- Caso haja mais de um valor decorrente de mais de um advogado nomeado, coloque os valores em um VETOR.
+- NÃO abreviar nomes com siglas.
+- Lmebre-se de não repetir NENHUM CAMPO.
+- EXTRAIA também:
+  1. "outras_datas": qualquer data adicional presente no texto, acompanhada de uma breve descrição sobre o que essa data representa.
+  2. "outros_valores": qualquer valor adicional (além do valor fixado dos dativos/honorários), acompanhado de uma breve descrição sobre o que esse valor representa.
+  3. "n_auto": número do auto relacionado ao processo.
+- As datas devem estar no formato YYYY-MM-DD.
